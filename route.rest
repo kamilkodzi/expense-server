@@ -1,0 +1,11 @@
+GET http://localhost:3000/api/posts
+
+###
+
+POST http://localhost:3000/api/posts
+content-type: application/json
+
+{
+    "title":"Kamil123-test",
+    "content":"bla blab bla blabbla blabbla blab"
+}
