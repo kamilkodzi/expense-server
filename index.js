@@ -12,20 +12,31 @@ app.use(express.json());
 app.use(
   session({
     secret: "helloworld",
-    cookie: { maxAge: 300000 },
+    cookie: { maxAge: 900000 },
     resave: true,
     saveUninitialized: false,
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get("/", (req, res) => {
   res.send("Hello Gaming-server!");
 });
 app.use("/auth", authRoute);
-app.use("/api", routes);
-
-app.use(passport.initialize);
-app.use(passport.session());
+app.use(
+  "/api",
+  (req, res, next) => {
+    console.log("usr z esji" + req.user);
+    if (req.user) {
+      next();
+    } else {
+      res.status(403).send("unauthorized");
+    }
+  },
+  routes
+);
 
 app.listen(3000, () => {
   console.log(`Server starts on port 3000`);

@@ -5,14 +5,5 @@ const UserSchema = mongoose.Schema({
   password: String,
 });
 
-// UserSchema.methods.verifyPassword = (candidatePassword, next) => {
-//   console.log("hasło ze schemy: " + this.password);
-//   if (candidatePassword === this.password) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// };
-
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

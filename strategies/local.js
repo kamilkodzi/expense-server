@@ -17,28 +17,6 @@ passport.deserializeUser(async (username, done) => {
   }
 });
 
-// passport.use(
-//   new LocalStrategy(function (username, password, done) {
-//     User.findOne({ username: username }, async (err, user) => {
-//       //   console.log("tutaj");
-//       if (err) {
-//         console.log(err);
-//         return done(err);
-//       }
-//       if (!user) {
-//         console.log("tutaj");
-//         return done(null, false);
-//       }
-//       if (!user.verifyPassword(password)) {
-//         console.log("tua" + user.verifyPassword(password));
-//         return done(null, false);
-//       }
-//       console.log("sprawdznie passworda" + user.verifyPassword(passport));
-//       return done(null, user);
-//     });
-//   })
-// );
-
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
