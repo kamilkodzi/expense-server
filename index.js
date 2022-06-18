@@ -5,10 +5,16 @@ const authRoute = require("./routes/auth");
 const passport = require("passport");
 const local = require("./strategies/local");
 const session = require("express-session");
+const cors = require("cors");
 
 dbConnection().catch((err) => console.log(err));
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:8000",
+  })
+);
 app.use(
   session({
     secret: "helloworld",
@@ -17,6 +23,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 app.use(passport.initialize());
 app.use(passport.session());
