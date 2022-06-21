@@ -1,5 +1,7 @@
 import { Express, NextFunction, Request, Response } from "express";
 import IGetUserAuthInfoRequest from "./IGetUserAuthInfoRequest";
+import apiErrorHandler from "./error/apiErrorHandler";
+import ApiError from "./error/ExpressError";
 
 const routes = require("./routes/routes.js");
 const dbConnection = require("./config/db");
@@ -54,12 +56,14 @@ app.use(
     if (req.user) {
       next();
     } else {
-      res.status(403).send("unauthorized");
+      next(ApiError.unauthorized("username or password are not correct"));
+      return;
     }
   },
   routes
 );
 
+app.use(apiErrorHandler);
 app.listen(3000, () => {
   console.log(`Server starts on port 3000`);
 });

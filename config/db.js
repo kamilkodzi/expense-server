@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 async function connection() {
-  await mongoose.connect("mongodb://localhost:27017/test", {
+  await mongoose.connect("mongodb://localahost:27017/test", {
     useNewUrlParser: true,
   });
 }
