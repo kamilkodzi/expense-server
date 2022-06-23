@@ -1,4 +1,4 @@
-class ApiError extends Error {
+class ExpressError extends Error {
   code: number;
   constructor(code: number, message: string) {
     super();
@@ -7,14 +7,14 @@ class ApiError extends Error {
   }
 
   static badRequest(msg: string) {
-    return new ApiError(400, msg);
+    return new ExpressError(400, msg);
   }
   static internal(msg: string) {
-    return new ApiError(500, msg);
+    return new ExpressError(500, msg);
   }
   static unauthorized(msg: string) {
-    return new ApiError(403, msg);
+    return new ExpressError(403, msg);
   }
 }
 
-export default ApiError;
+export { ExpressError };

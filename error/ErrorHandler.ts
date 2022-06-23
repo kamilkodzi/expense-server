@@ -1,25 +1,29 @@
 import { Response } from "express";
-class ApiError extends Error {
-  code: number;
-  constructor(code: number, message: string) {
-    super();
-    this.message = message;
-    this.code = code;
-  }
-}
+import { ExpressError } from "./ExpressError";
 
 class ErrorHandler {
-  private crashOrSendResponse = (err: Error | ApiError, res: Response) => {
-    if (err instanceof ApiError) res.status(err.code).send(err.message);
-    res.send(err.message);
-    res.send("We have an erroe xD - test");
+  private crashOrSendResponse = async (
+    err: Error | ExpressError,
+    res: Response
+  ) => {
+    if (err instanceof ExpressError) {
+      res.status(err.code).send(err.message);
+    } else {
+      res
+        .status(500)
+        .send("Unhandled error exception, please contact with administrator");
+    }
   };
 
   public async handleError(
-    error: Error,
+    error: Error | ExpressError,
     responseStream: Response
   ): Promise<void> {
-    await console.log("Error handler starts");
+    // in prod, do not use console.log or console.error because
+    // it is not async
+    await console.error(
+      "Error handler starts - time to implements winston or something"
+    );
     await this.crashOrSendResponse(error, responseStream);
   }
 }

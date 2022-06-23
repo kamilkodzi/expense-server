@@ -1,7 +1,7 @@
 import { Express, NextFunction, Request, Response } from "express";
 import IGetUserAuthInfoRequest from "./IGetUserAuthInfoRequest";
 import apiErrorHandler from "./error/apiErrorHandler";
-import ApiError from "./error/ExpressError";
+import { ExpressError } from "./error/ExpressError";
 import { errorHandler } from "./error/ErrorHandler";
 
 const routes = require("./routes/routes.js");
@@ -57,24 +57,28 @@ app.use(
     if (req.user) {
       next();
     } else {
-      next(ApiError.unauthorized("username or password are not correct"));
+      next(ExpressError.unauthorized("username or password are not correct"));
       return;
     }
   },
   routes
 );
+
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   await errorHandler.handleError(err, res);
 });
 
-process.on("uncaughtException", (error: Error) => {
-  console.log("Sorrry we have uncaughtException = ", error);
-});
+//Need to check how to use process.on in case of errors - tbc
+// process.on("uncaughtException", (error: Error) => {
+//   console.log("Sorrry we have uncaughtException = ", error);
+// });
 
-process.on("unhandledRejection", (reason) => {
-  console.log("unhandledRejection = ", reason);
-});
-// app.use(apiErrorHandler);
+// process.on("unhandledRejection", (reason) => {
+//   console.log("unhandledRejection = ", reason);
+// });
+
+app.use(apiErrorHandler);
+
 app.listen(3000, () => {
   console.log(`Server starts on port 3000`);
 });
