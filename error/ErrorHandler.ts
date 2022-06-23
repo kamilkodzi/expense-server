@@ -1,9 +1,20 @@
 import { Response } from "express";
+class ApiError extends Error {
+  code: number;
+  constructor(code: number, message: string) {
+    super();
+    this.message = message;
+    this.code = code;
+  }
+}
+
 class ErrorHandler {
-  crashOrSendResponse = (err: Error, res: Response) => {
-    throw new Error("test bad a error");
+  private crashOrSendResponse = (err: Error | ApiError, res: Response) => {
+    if (err instanceof ApiError) res.status(err.code).send(err.message);
+    res.send(err.message);
     res.send("We have an erroe xD - test");
   };
+
   public async handleError(
     error: Error,
     responseStream: Response
