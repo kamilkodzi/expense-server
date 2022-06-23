@@ -2,6 +2,7 @@ import { Express, NextFunction, Request, Response } from "express";
 import IGetUserAuthInfoRequest from "./IGetUserAuthInfoRequest";
 import apiErrorHandler from "./error/apiErrorHandler";
 import ApiError from "./error/ExpressError";
+import { errorHandler } from "./error/ErrorHandler";
 
 const routes = require("./routes/routes.js");
 const dbConnection = require("./config/db");
@@ -62,8 +63,18 @@ app.use(
   },
   routes
 );
+app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
+  await errorHandler.handleError(err, res);
+});
 
-app.use(apiErrorHandler);
+process.on("uncaughtException", (error: Error) => {
+  console.log("Sorrry we have uncaughtException = ", error);
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.log("unhandledRejection = ", reason);
+});
+// app.use(apiErrorHandler);
 app.listen(3000, () => {
   console.log(`Server starts on port 3000`);
 });
