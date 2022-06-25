@@ -10,6 +10,9 @@
   "author": "kamilkodzi",
   "license": "ISC",
   "dependencies": {
+    "@types/express-session": "^1.17.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/passport": "^1.0.9",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",

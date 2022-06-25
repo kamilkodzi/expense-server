@@ -1,8 +1,8 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const User = require("../models/User");
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import User from "../models/User";
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user: User, done) => {
   done(null, user.username);
 });
 

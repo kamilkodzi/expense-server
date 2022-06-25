@@ -4,8 +4,8 @@ const passport = require("passport");
 const User = require("../models/User");
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  console.log("dotarles do login");
-  res.send(200);
+  // implements if authenticated and if not
+  res.sendStatus(200);
 });
 
 router.post("/register", async (req, res) => {

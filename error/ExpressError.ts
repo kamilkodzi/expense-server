@@ -12,8 +12,11 @@ class ExpressError extends Error {
   static internal(msg: string) {
     return new ExpressError(500, msg);
   }
-  static unauthorized(msg: string) {
+  static unAuthorized(msg: string) {
     return new ExpressError(403, msg);
+  }
+  static unAuthenticated(msg: string) {
+    return new ExpressError(401, msg);
   }
 }
 
