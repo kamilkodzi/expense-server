@@ -1,18 +1,19 @@
 ### Register
-POST http://localhost:3000/auth/register
+POST http://localhost:3000/user/register
 content-type: application/json
 
 {
-    "username":"kamil",
+    "email":"kami@ka.pl",
+    "username":"kamil3",
     "password":"1234"
 }
 
 ### Login
-POST http://localhost:3000/auth/login
+POST http://localhost:3000/user/login
 content-type: application/json
 
 {
-    "username":"kamil",
+    "username":"kamil3",
     "password":"1234"
 }
 

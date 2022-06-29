@@ -7,7 +7,7 @@ class ErrorHandler {
     res: Response
   ) => {
     if (err instanceof ExpressError) {
-      res.status(err.code).send(err.message);
+      res.status(err.code).json(err.message);
       return;
     }
     // in prod, do not use console.log or console.error
@@ -29,5 +29,12 @@ class ErrorHandler {
     await this.crashOrSendResponse(error, responseStream);
   }
 }
+
+export const asyncErrCatchWrapper = (fn) => {
+  return function (req, res, next) {
+    fn(req, res, next).catch((e) => next(e));
+  };
+};
+
 const errorHandler = new ErrorHandler();
 export default errorHandler;

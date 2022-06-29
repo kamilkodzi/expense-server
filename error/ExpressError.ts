@@ -18,6 +18,10 @@ class ExpressError extends Error {
   static unAuthenticated(msg: string) {
     return new ExpressError(401, msg);
   }
+
+  static couldNotStoreInDatabase(msg: string) {
+    return new ExpressError(422, msg);
+  }
 }
 
 export { ExpressError };

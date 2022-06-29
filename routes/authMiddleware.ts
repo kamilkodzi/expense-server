@@ -1,6 +1,6 @@
 import { ExpressError } from "../error/ExpressError";
 
-const isAuth = (req, res, next) => {
+const isLogedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
@@ -10,4 +10,8 @@ const isAuth = (req, res, next) => {
   }
 };
 
-export { isAuth };
+const isAuthorized = () => {
+  console.log("To be implemented");
+};
+
+export { isLogedIn };
