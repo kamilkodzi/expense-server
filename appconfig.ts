@@ -1,6 +1,3 @@
-import cors from "cors";
-import { SessionData } from "express-session";
-import { Session } from "inspector";
 import mongoose from "mongoose";
 
 export const corsConfig = {

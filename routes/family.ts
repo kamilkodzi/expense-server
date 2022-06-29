@@ -1,21 +1,9 @@
 import { Router } from "express";
-import Family, { IFamily } from "../models/Family";
+import { createFamily, showFamilies } from "../controllers/family";
 
 const router = Router();
-router.get("/test", (req, res) => {
-  res.sendStatus(200);
-});
+router.get("/", showFamilies);
 
-router.post("/create", async (req, res) => {
-  const { familyName } = req.body;
-  const newFamily: IFamily = {
-    familyName: familyName,
-    headOfFamily: "sdsds",
-    members: [],
-  };
-  Family.create();
+router.post("/new", createFamily);
 
-  res.status(200).send("koniec");
-});
-
-module.exports = router;
+export default router;

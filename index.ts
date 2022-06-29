@@ -5,6 +5,7 @@ import errorHandler, { asyncErrCatchWrapper } from "./error/ErrorHandler";
 import passport from "passport";
 import { corsConfig, dbConnection, sessionConfig } from "./appconfig";
 import { isLogedIn } from "./routes/authMiddleware";
+import familyRoutes from "./routes/family";
 
 const routes = require("./routes/routes.js");
 const authRoute = require("./routes/user");
@@ -25,6 +26,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello in family expense platform!");
 });
 app.use("/user", authRoute);
+app.use("/family", familyRoutes);
 app.use("/api", isLogedIn, routes);
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {

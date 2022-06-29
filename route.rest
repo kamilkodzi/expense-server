@@ -3,9 +3,11 @@ POST http://localhost:3000/user/register
 content-type: application/json
 
 {
-    "email":"kami@ka.pl",
-    "username":"kamil3",
-    "password":"1234"
+    "username":"kamil",
+    "password":"1234",
+    "lastName":"Adam",
+    "firstName":"Kami"
+    
 }
 
 ### Login
@@ -13,7 +15,7 @@ POST http://localhost:3000/user/login
 content-type: application/json
 
 {
-    "username":"kamil3",
+    "username":"kamil",
     "password":"1234"
 }
 
@@ -33,3 +35,15 @@ content-type: application/json
     "title":"Kamil123-test",
     "content":"bla blab bla blabbla blabbla blab"
 }
+
+###Create new Family
+POST http://localhost:3000/family/new
+content-type: application/json
+
+{
+    "familyName":"Wimau"
+}
+
+###Create new Family
+GET  http://localhost:3000/family/
+content-type: application/json

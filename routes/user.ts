@@ -14,12 +14,17 @@ router.post(
   "/register",
   asyncErrCatchWrapper(async (req, res) => {
     try {
-      const { username, password, email } = req.body;
-      const user = new User({ email: email, username: username });
+      const { username, password, firstName, lastName } = req.body;
+      const user = new User({ username, firstName, lastName });
       const newUser = await User.register(user, password);
-      res.status(200).send(newUser);
+      res.status(200).json({
+        message: "User created",
+        data: {
+          fistrName: newUser.firstName,
+          lastName: newUser.lastName,
+        },
+      });
     } catch (error) {
-      console.log("mamy erora");
       throw ExpressError.couldNotStoreInDatabase(error.message);
     }
   })
