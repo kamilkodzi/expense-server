@@ -12,7 +12,7 @@ export interface IUser {
   createdAt: Date;
 }
 
-const UserSchema: Schema = new Schema({
+const UserSchema: Schema = new Schema<IUser>({
   isAdmin: { type: Boolean, default: false },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },

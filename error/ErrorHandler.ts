@@ -7,7 +7,7 @@ class ErrorHandler {
     res: Response
   ) => {
     if (err instanceof ExpressError) {
-      res.status(err.code).json(err.message);
+      res.status(err.code).json({ message: err.message });
       return;
     }
     // in prod, do not use console.log or console.error
@@ -19,7 +19,9 @@ class ErrorHandler {
     );
     res
       .status(500)
-      .send("Unhandled error exception, please contact with administrator");
+      .json({
+        message: "Unhandled error exception, please contact with administrator",
+      });
   };
 
   public async handleError(

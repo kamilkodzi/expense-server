@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import * as mongoose from "mongoose";
 
 export interface IFamily {
   familyName: string;

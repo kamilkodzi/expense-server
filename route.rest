@@ -41,22 +41,42 @@ POST http://localhost:3000/family
 content-type: application/json
 
 {
-    "familyName":"Soprano"
+    "familyName":"Soprano22"
 }
 
-###Create new Family
+###GET ALL new Family
 GET  http://localhost:3000/family
 content-type: application/json
 
 ###Show family by ID
-GET  http://localhost:3000/family/62bc1cac1ad7fe198b5a6c21
+GET  http://localhost:3000/family/62bd6cf951fc80cef7877c22
 content-type: application/json
 
 
 ### Remove user
-DELETE   http://localhost:3000/user/62bd3d0f972a65a3c4d3a912
+DELETE   http://localhost:3000/user/62bd6cf351fc80cef7877c1c
 content-type: application/json
 
 
 ### Join Family
-PATCH  http://localhost:3000/family/join/62bd4fac89764293be491ad6
+PATCH  http://localhost:3000/family/join/62bd6cf951fc80cef7877c22
+
+### Quit Family
+PATCH  http://localhost:3000/family/quit/62bd6cf951fc80cef7877c22
+
+
+###SHAKEHAND - get current user info
+GET  http://localhost:3000/user/shakehand
+content-type: application/json
+
+###Show my family
+GET  http://localhost:3000/user/myfamily
+content-type: application/json
+
+### Set Bugdet for Family
+PATCH  http://localhost:3000/family/62bd8b6fe9d49e4224a08558/budget
+content-type: application/json
+
+{
+    "budgetValue":2000
+}
