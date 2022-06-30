@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import passportLocalMongoose from "passport-local-mongoose";
 
 export interface IUser {
-  _id?: Schema.Types.ObjectId;
+  id?: Schema.Types.ObjectId;
   username: string;
   password: string;
   firstName: string;

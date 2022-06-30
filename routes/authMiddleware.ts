@@ -44,6 +44,22 @@ export const notMemberOfHittedFamily = async (req, res, next) => {
   }
 };
 
+export const isHeadOfFamily = async (req, res, next) => {
+  const { id } = req.params;
+  const currentUserId = req.user._id;
+  try {
+    const family = await Family.findById(id);
+    //@ts-ignore
+    if (family.headOfFamily.equals(currentUserId)) {
+      next();
+    } else {
+      throw ExpressError.unAuthorized("You are not head of the family");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const isOwner = async (req, res, next) => {
   const { id } = req.params;
   const currentUserId = req.user.id;

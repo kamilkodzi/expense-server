@@ -1,14 +1,14 @@
 import { model, Schema } from "mongoose";
 
 export interface IExpense {
-  expenseName: string;
+  name: string;
   value: number;
   author: Schema.Types.ObjectId;
   createdAt: Date;
 }
 
 const ExpenseSchema: Schema = new Schema<IExpense>({
-  expenseName: String,
+  name: String,
   value: Number,
   author: { type: Schema.Types.ObjectId, ref: "User" },
   createdAt: { type: Date, immutable: true, default: Date.now },

@@ -1,0 +1,64 @@
+
+
+
+
+
+###Create new Family
+POST http://localhost:3000/families
+content-type: application/json
+
+{
+    "familyName":"Adamscy2"
+}
+
+###GET ALL new Family
+GET  http://localhost:3000/families
+content-type: application/json
+
+###Show family by ID
+GET  http://localhost:3000/families/62bd6cf951fc80cef7877c21
+content-type: application/json
+
+
+
+
+
+### Join Family
+PATCH  http://localhost:3000/families/join/62bd6cf951fc80cef7877c22
+
+### Quit Family
+PATCH  http://localhost:3000/families/quit/62bd6cf951fc80cef7877c22
+
+
+
+
+
+
+### Set Bugdet for Family
+PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/budget
+content-type: application/json
+
+{
+    "budgetValue":5000
+}
+
+### Add Expense for Family
+POST  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses
+content-type: application/json
+
+{
+    "value":1500,
+    "name":"else"
+}
+
+### Remove Expense form Family
+DELETE  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bdbd09970e7d2112ef4b4f
+content-type: application/json
+
+### Edit Expense form Family
+PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bdc977bf22e3c25f5278d5
+content-type: application/json
+
+{
+    "name":"new_Name"
+}

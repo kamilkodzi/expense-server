@@ -32,7 +32,7 @@ class ErrorHandler {
   }
 }
 
-export const asyncErrCatchWrapper = (fn) => {
+export const catchErr = (fn) => {
   return function (req, res, next) {
     fn(req, res, next).catch((e) => next(e));
   };

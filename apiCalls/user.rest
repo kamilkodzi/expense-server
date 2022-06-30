@@ -1,0 +1,11 @@
+###Get User profile
+GET  http://localhost:3000/user/62bd6d4451fc80cef7877c36
+content-type: application/json
+
+###Show my family
+GET  http://localhost:3000/user/myfamily
+content-type: application/json
+
+### Remove user
+DELETE   http://localhost:3000/user/62bddd2b28c5126a6715b866
+content-type: application/json

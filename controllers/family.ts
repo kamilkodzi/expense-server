@@ -1,8 +1,7 @@
 import { ExpressError } from "../error/ExpressError";
-import Family, { IFamily } from "../models/Family";
-import Expense, { IExpense } from "../models/Expense";
-import User, { IUser } from "../models/User";
-import { Document, HydratedDocument, Model, ObjectId, Query } from "mongoose";
+import Family from "../models/Family";
+import Expense from "../models/Expense";
+import User from "../models/User";
 
 class FamilyController {
   showAll = async (req, res) => {
@@ -17,8 +16,8 @@ class FamilyController {
   };
 
   showOne = async (req, res) => {
-    const familyId = req.params.id;
-    const results = await Family.findById(familyId)
+    const { id } = req.params;
+    const results = await Family.findById(id)
       .populate({
         path: "headOfFamily",
         select: ["firstName", "lastName"],
@@ -27,41 +26,24 @@ class FamilyController {
         path: "members",
         select: ["firstName", "lastName"],
       });
-
-    res.status(200).json(results);
-  };
-
-  showMyFamily = async (req, res) => {
-    const currentUserId = req.user._id;
-    const userFamily = await User.findById(currentUserId);
-    if (userFamily.family) {
-      const family = await Family.findById(userFamily.family)
-        .populate({
-          path: "headOfFamily",
-          select: ["firstName", "lastName", "username"],
-        })
-        .populate({
-          path: "members",
-          select: ["firstName", "lastName", "username"],
-        });
-      res.status(200).json(family);
+    if (results) {
+      res.status(200).json(results);
     } else {
-      res
-        .status(200)
-        .json({ message: "You have no family - please join any." });
+      throw ExpressError.badRequest("No family with given id");
     }
   };
 
+ 
+
   create = async (req, res) => {
     const { familyName } = req.body;
-    const currentUserId = req.user._id;
-    const user = await User.findById(currentUserId);
+    const user = await User.findById(req.user.id);
 
     if (user.family === null) {
       const newFamily = new Family({
         familyName: familyName,
-        headOfFamily: currentUserId,
-        members: [currentUserId],
+        headOfFamily: req.user.id,
+        members: [req.user.id],
       });
       //@ts-ignore
       user.family = newFamily;
@@ -76,46 +58,67 @@ class FamilyController {
   };
 
   join = async (req, res) => {
-    const familyId = req.params.id;
-    const currentUserId = req.user._id;
-    const user = await User.findById(currentUserId);
-    const family = await Family.findById(familyId);
-    family.members.push(currentUserId);
-    user.family = familyId;
+    const { id } = req.params;
+    const user = await User.findById(req.user.id);
+    const family = await Family.findById(id);
+    family.members.push(req.user.id);
+    user.family = id;
     family.save();
     user.save();
     res.status(200).json({ message: "You've joined the family" });
   };
 
   quit = async (req, res) => {
-    const familyId: ObjectId = req.params.id;
-    const currentUserId = req.user._id;
-    const user = await User.findById(currentUserId);
+    const { id } = req.params;
+    const user = await User.findById(req.user.id);
 
-    await Family.findByIdAndUpdate(familyId, {
-      $pull: { members: currentUserId },
+    await Family.findByIdAndUpdate(id, {
+      $pull: { members: req.user.id },
     });
     user.family = null;
     user.save();
     res.status(200).json({ message: "You've quit the family" });
   };
 
-  addExpense = async (req, res) => {};
+  addExpense = async (req, res) => {
+    const { id } = req.params;
+    const { value, name } = req.body;
+    const expenseObj = new Expense({
+      name,
+      value,
+      author: req.user.id,
+    });
+    const family = await Family.findById(id);
+    //@ts-ignore
+    family.expenses.push(expenseObj);
+    await family.save();
+    await expenseObj.save();
+    res.status(200).json({ message: "You've added expense" });
+  };
 
-  removeExpense = async (req, res) => {};
+  removeExpense = async (req, res) => {
+    const { id, expenseId } = req.params;
+    await Family.findByIdAndUpdate(id, { $pull: { expenses: expenseId } });
+    await Expense.findByIdAndDelete(expenseId);
+    res.status(200).json({ message: "You removed expense" });
+  };
+
+  editExpense = async (req, res) => {
+    const { id, expenseId } = req.params;
+    console.log("Expense Id to :", expenseId);
+    console.log("Body to :", req.body);
+    await Expense.findByIdAndUpdate(expenseId, req.body);
+    res.status(200).send("You've updated expense");
+    //tbd
+  };
 
   setBudget = async (req, res) => {
     const { budgetValue } = req.body;
     const { id } = req.params;
     const family = await Family.findById(id);
-    //@ts-ignore
-    if (family?.headOfFamily.equals(req.user.id)) {
-      family.budget = budgetValue;
-      family.save();
-      res.status(200).json({ message: "You've changed baudget" });
-    } else {
-      throw ExpressError.unAuthorized("You have no permisstion to change");
-    }
+    family.budget = budgetValue;
+    family.save();
+    res.status(200).json({ message: "You've changed the budget" });
   };
 }
 

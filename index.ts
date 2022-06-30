@@ -1,15 +1,16 @@
+//Do not remove * as local - it's required by passport :)
+import "./strategies/local";
 import { Express, NextFunction, Request, Response } from "express";
-// import IGetUserAuthInfoRequest from "./IGetUserAuthInfoRequest";
 import { ExpressError } from "./error/ExpressError";
-import errorHandler, { asyncErrCatchWrapper } from "./error/ErrorHandler";
+import errorHandler from "./error/ErrorHandler";
 import passport from "passport";
 import { corsConfig, dbConnection, sessionConfig } from "./appconfig";
 import { isLogedIn } from "./routes/authMiddleware";
 import familyRoutes from "./routes/family";
+import login from "./routes/login";
+import userRoutes from "./routes/user";
+// const user = require("./routes/user");
 
-const routes = require("./routes/routes.js");
-const user = require("./routes/user");
-const local = require("./strategies/local");
 const session = require("express-session");
 const cors = require("cors");
 const express = require("express");
@@ -22,12 +23,13 @@ app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).send("Hello in family expense platform!");
+app.use("/", login);
+app.use("/user", isLogedIn, userRoutes);
+app.use("/families", isLogedIn, familyRoutes);
+
+app.all("/*", (req, res, next) => {
+  next(ExpressError.badRequest("Server could not understand your request"));
 });
-app.use("/user", user);
-app.use("/family", isLogedIn, familyRoutes);
-app.use("/api", isLogedIn, routes);
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   await errorHandler.handleError(err, res);
