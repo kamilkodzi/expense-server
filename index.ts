@@ -8,7 +8,7 @@ import { isLogedIn } from "./routes/authMiddleware";
 import familyRoutes from "./routes/family";
 
 const routes = require("./routes/routes.js");
-const authRoute = require("./routes/user");
+const user = require("./routes/user");
 const local = require("./strategies/local");
 const session = require("express-session");
 const cors = require("cors");
@@ -25,8 +25,8 @@ app.use(passport.session());
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello in family expense platform!");
 });
-app.use("/user", authRoute);
-app.use("/family", familyRoutes);
+app.use("/user", user);
+app.use("/family", isLogedIn, familyRoutes);
 app.use("/api", isLogedIn, routes);
 
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {

@@ -4,11 +4,23 @@ const passport = require("passport");
 import { asyncErrCatchWrapper } from "../error/ErrorHandler";
 import { ExpressError } from "../error/ExpressError";
 import User from "../models/User";
+import { isLogedIn, isOwner } from "./authMiddleware";
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
-  // implements if authenticated and if not
-  res.sendStatus(200);
+  res.status(200).json({ message: "Welcome back !" });
 });
+
+router.delete(
+  "/:id",
+  isLogedIn,
+  isOwner,
+  asyncErrCatchWrapper(async (req, res, next) => {
+    console.log("inside remove route");
+    const userToRemove = req.params.id;
+    await User.deleteOne({ _id: userToRemove });
+    res.status(200).json({ message: "User removed" });
+  })
+);
 
 router.post(
   "/register",

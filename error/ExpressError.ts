@@ -22,6 +22,9 @@ class ExpressError extends Error {
   static couldNotStoreInDatabase(msg: string) {
     return new ExpressError(422, msg);
   }
+  static conflictWhileCreatingEntry(msg: string) {
+    return new ExpressError(409, msg);
+  }
 }
 
 export { ExpressError };

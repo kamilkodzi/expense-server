@@ -3,7 +3,7 @@ POST http://localhost:3000/user/register
 content-type: application/json
 
 {
-    "username":"kamil",
+    "username":"kamil2",
     "password":"1234",
     "lastName":"Adam",
     "firstName":"Kami"
@@ -15,7 +15,7 @@ POST http://localhost:3000/user/login
 content-type: application/json
 
 {
-    "username":"kamil",
+    "username":"kamil2",
     "password":"1234"
 }
 
@@ -37,13 +37,26 @@ content-type: application/json
 }
 
 ###Create new Family
-POST http://localhost:3000/family/new
+POST http://localhost:3000/family
 content-type: application/json
 
 {
-    "familyName":"Wimau"
+    "familyName":"Soprano"
 }
 
 ###Create new Family
-GET  http://localhost:3000/family/
+GET  http://localhost:3000/family
 content-type: application/json
+
+###Show family by ID
+GET  http://localhost:3000/family/62bc1cac1ad7fe198b5a6c21
+content-type: application/json
+
+
+### Remove user
+DELETE   http://localhost:3000/user/62bd3d0f972a65a3c4d3a912
+content-type: application/json
+
+
+### Join Family
+PATCH  http://localhost:3000/family/join/62bd4fac89764293be491ad6
