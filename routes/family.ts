@@ -6,8 +6,8 @@ import {
   isMemberOfHittedFamily,
   notMemberOfHittedFamily,
 } from "./authMiddleware";
-
 const router = Router();
+
 router.get("/", catchErr(FamilyControler.showAll));
 router.post("/", catchErr(FamilyControler.create));
 router.get("/:id", catchErr(FamilyControler.showOne));

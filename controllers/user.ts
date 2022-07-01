@@ -1,6 +1,4 @@
 import { ExpressError } from "../error/ExpressError";
-// import Family from "../models/Family";
-// import Expense from "../models/Expense";
 import User from "../models/User";
 
 class UserController {
@@ -13,34 +11,6 @@ class UserController {
       });
     res.status(200).json(user);
   };
-
-  // familyData = async (req, res) => {
-  //   const userFamily = await User.findById(req.user.id);
-  //   if (userFamily.family) {
-  //     const family = await Family.findById(userFamily.family)
-  //       .populate({
-  //         path: "headOfFamily",
-  //         select: ["firstName", "lastName", "username"],
-  //       })
-  //       .populate({
-  //         path: "members",
-  //         select: ["firstName", "lastName", "username"],
-  //       })
-  //       .populate({
-  //         path: "expenses",
-  //         select: ["value", "name", "author"],
-  //         populate: {
-  //           path: "author",
-  //           select: ["firstName", "lastName", "username"],
-  //         },
-  //       });
-  //     res.status(200).json(family);
-  //   } else {
-  //     res
-  //       .status(200)
-  //       .json({ message: "You have no family - please join any." });
-  //   }
-  // };
 
   remove = async (req, res) => {
     const { id } = req.params;

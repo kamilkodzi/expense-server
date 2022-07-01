@@ -10,6 +10,4 @@ router.post("/register", catchErr(user.create));
 router.post("/login", passport.authenticate("local"), user.login);
 router.delete("/:id", isLogedIn, isOwner, catchErr(user.remove));
 
-// router.get("/family", isLogedIn, catchErr(user.familyData));
-
 export default router;
