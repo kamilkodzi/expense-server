@@ -36,7 +36,8 @@ app.all("/*", (req, res, next) => {
 app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   await errorHandler.handleError(err, res);
 });
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   const env = app.get("env");
   console.log(`Server is running... in ${env} mode`);
 });
