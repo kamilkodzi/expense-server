@@ -1,25 +1,18 @@
 import { ExpressError } from "../error/ExpressError";
-import Family from "../models/Family";
-import Expense from "../models/Expense";
+// import Family from "../models/Family";
+// import Expense from "../models/Expense";
 import User from "../models/User";
 
 class UserController {
-  // userData = async (req, res) => {
-  //   const { id } = req.params;
-  //   try {
-  //     const user = await User.findById(id)
-  //       .select(["username", "firstName", "lastName", "family"])
-  //       .populate({
-  //         path: "family",
-  //         select: ["familyName", "headOfFamily"],
-  //       });
-  //     if (!user)
-  //       throw ExpressError.badRequest("There is no user with provided id");
-  //     res.status(200).json(user);
-  //   } catch (error) {
-  //     throw ExpressError.badRequest("There is no user with provided id");
-  //   }
-  // };
+  userData = async (req, res) => {
+    const user = await User.findById(req.user.id)
+      .select(["username", "firstName", "lastName", "family"])
+      .populate({
+        path: "family",
+        select: ["familyName", "headOfFamily"],
+      });
+    res.status(200).json(user);
+  };
 
   // familyData = async (req, res) => {
   //   const userFamily = await User.findById(req.user.id);

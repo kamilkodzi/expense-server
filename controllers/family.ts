@@ -25,6 +25,9 @@ class FamilyController {
       .populate({
         path: "members",
         select: ["firstName", "lastName"],
+      })
+      .populate({
+        path: "expenses",
       });
     if (results) {
       res.status(200).json(results);
@@ -32,8 +35,6 @@ class FamilyController {
       throw ExpressError.badRequest("No family with given id");
     }
   };
-
- 
 
   create = async (req, res) => {
     const { familyName } = req.body;
@@ -104,12 +105,10 @@ class FamilyController {
   };
 
   editExpense = async (req, res) => {
-    const { id, expenseId } = req.params;
-    console.log("Expense Id to :", expenseId);
-    console.log("Body to :", req.body);
-    await Expense.findByIdAndUpdate(expenseId, req.body);
+    const { expenseId } = req.params;
+    const { value, name } = req.body;
+    await Expense.findByIdAndUpdate(expenseId, { value, name });
     res.status(200).send("You've updated expense");
-    //tbd
   };
 
   setBudget = async (req, res) => {

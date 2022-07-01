@@ -17,12 +17,12 @@ router.patch(
   catchErr(FamilyControler.setBudget)
 );
 router.patch(
-  "/join/:id",
+  "/:id/join",
   notMemberOfHittedFamily,
   catchErr(FamilyControler.join)
 );
 router.patch(
-  "/quit/:id",
+  "/:id/quit",
   isMemberOfHittedFamily,
   catchErr(FamilyControler.quit)
 );

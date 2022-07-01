@@ -1,37 +1,26 @@
-
-
-
-
-
-###Create new Family
+###POST - Create new Family
 POST http://localhost:3000/families
 content-type: application/json
 
 {
-    "familyName":"Adamscy2"
+    "familyName":"Sporano007"
 }
 
-###GET ALL new Family
+###GET - find latest families created
 GET  http://localhost:3000/families
 content-type: application/json
 
-###Show family by ID
-GET  http://localhost:3000/families/62bd6cf951fc80cef7877c21
+
+###GET - find some specific family
+GET  http://localhost:3000/families/62bd6cf951fc80cef7877c22
 content-type: application/json
 
 
-
-
-
 ### Join Family
-PATCH  http://localhost:3000/families/join/62bd6cf951fc80cef7877c22
+PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/join
 
 ### Quit Family
-PATCH  http://localhost:3000/families/quit/62bd6cf951fc80cef7877c22
-
-
-
-
+PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/quit
 
 
 ### Set Bugdet for Family
