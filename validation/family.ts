@@ -1,13 +1,19 @@
 import Joi from "joi";
-import { IFamily } from "../models/Family";
 
-export const loginSchema = Joi.object({
-  username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string()
-    .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-    .rule({
-      message: "Password must be alphanumeric between 3 to 30 characters",
-    })
-    .required(),
+export const addFamily = Joi.object({
+  familyName: Joi.string().min(3).max(30).required(),
 });
 
+export const setBudget = Joi.object({
+  budgetValue: Joi.number().min(0).required(),
+});
+
+export const addExpense = Joi.object({
+  value: Joi.number().min(0).required(),
+  name: Joi.string().min(1).max(30).required(),
+});
+
+export const editExpense = Joi.object({
+  value: Joi.number().min(0),
+  name: Joi.string().min(1).max(30),
+});

@@ -1,4 +1,5 @@
 import { ExpressError } from "../error/ExpressError";
+import Expense from "../models/Expense";
 import Family from "../models/Family";
 import User from "../models/User";
 
@@ -6,9 +7,7 @@ export const isLogedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    throw ExpressError.unAuthenticated(
-      "You are not authenticated to view this resources, please log in first"
-    );
+    throw ExpressError.unAuthenticated("Please login");
   }
 };
 
@@ -69,7 +68,28 @@ export const isOwner = async (req, res, next) => {
       next();
     } else {
       throw ExpressError.unAuthorized(
-        "You are not authorized to perform this action"
+        "You do not have sufficient rights to do that"
+      );
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const isOwnerOfExpense = async (req, res, next) => {
+  const { expenseId } = req.params;
+  const currentUserId = req.user.id;
+  try {
+    const results = await Expense.findById(expenseId);
+    console.log(results);
+    console.log(expenseId);
+    console.log(currentUserId);
+    //@ts-ignore
+    if (results && results.author.equals(currentUserId)) {
+      next();
+    } else {
+      throw ExpressError.unAuthorized(
+        "You do not have sufficient rights to do that"
       );
     }
   } catch (error) {

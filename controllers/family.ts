@@ -107,7 +107,8 @@ class FamilyController {
   editExpense = async (req, res) => {
     const { expenseId } = req.params;
     const { value, name } = req.body;
-    await Expense.findByIdAndUpdate(expenseId, { value, name });
+    const result = await Expense.findByIdAndUpdate(expenseId, { value, name });
+    console.log(result);
     res.status(200).send("You've updated expense");
   };
 

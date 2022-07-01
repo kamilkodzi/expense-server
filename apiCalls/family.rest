@@ -1,14 +1,15 @@
+###GET - find latest families created
+GET  http://localhost:3000/families
+content-type: application/json
+
+
 ###POST - Create new Family
 POST http://localhost:3000/families
 content-type: application/json
 
 {
-    "familyName":"Sporano007"
+    "familyName":"Sporano007ł"
 }
-
-###GET - find latest families created
-GET  http://localhost:3000/families
-content-type: application/json
 
 
 ###GET - find some specific family
@@ -24,7 +25,7 @@ PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/quit
 
 
 ### Set Bugdet for Family
-PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/budget
+PATCH  http://localhost:3000/families/62beef308ad39ae133c0df95/budget
 content-type: application/json
 
 {
@@ -41,11 +42,11 @@ content-type: application/json
 }
 
 ### Remove Expense form Family
-DELETE  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bdbd09970e7d2112ef4b4f
+DELETE  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bf11d3013c7782a38fc5fd
 content-type: application/json
 
 ### Edit Expense form Family
-PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bdc977bf22e3c25f5278d5
+PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/expenses/62bf11d3013c7782a38fc5fd
 content-type: application/json
 
 {

@@ -39,6 +39,11 @@ class UserController {
   login = async (req, res) => {
     res.status(200).json({ message: `Welcome back ${req.user.firstName}!` });
   };
+
+  logout = (req, res) => {
+    req.session.destroy();
+    res.status(200).json({ message: "You succesfully logout" });
+  };
 }
 
 const userController = new UserController();
