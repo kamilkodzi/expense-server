@@ -3,7 +3,8 @@ import User from "../models/User";
 
 class UserController {
   userData = async (req, res) => {
-    const user = await User.findById(req.user.id)
+    const { id } = req.params;
+    const user = await User.findById(id)
       .select(["username", "firstName", "lastName", "family"])
       .populate({
         path: "family",

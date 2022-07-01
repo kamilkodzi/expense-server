@@ -7,8 +7,14 @@ content-type: application/json
     "password":"1234"
 }
 
+### GET - Get information about current logged user - in other word: myprofile
+GET  http://localhost:3000/user/1=1
+content-type: application/json
+
+
+
 ### GET - Get user information from user with Given ID
-GET  http://localhost:3000/user/62bd6d4451fc80cef7877c36
+GET  http://localhost:3000/user/62bde7bd6b2bf2dd8f806e8f
 content-type: application/json
 
 ### DELETE - Remove user with given ID
@@ -17,7 +23,7 @@ content-type: application/json
 
 
 ### PUT - Create new user (Register)
-PUT  http://localhost:3000/user/register
+POST  http://localhost:3000/user/register
 content-type: application/json
 
 {
