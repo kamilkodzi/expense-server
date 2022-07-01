@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 import "./strategies/local";
 import express, { Express, NextFunction, Request, Response } from "express";
 import { ExpressError } from "./error/ExpressError";
@@ -9,12 +13,14 @@ import familyRoutes from "./routes/family";
 import userRoutes from "./routes/user";
 import session from "express-session";
 import cors from "cors";
+import helmet from "helmet";
 
 dbConnection().catch((err: any) => {
   //Will be moved to winston - maybe some day
   console.log(err);
 });
 const app: Express = express();
+app.use(helmet());
 app.use(express.json());
 app.use(cors(corsConfig));
 app.use(session(sessionConfig));
@@ -31,6 +37,6 @@ app.use(async (err: Error, req: Request, res: Response, next: NextFunction) => {
   await errorHandler.handleError(err, res);
 });
 app.listen(3000, () => {
-  //Will be moved to winston - maybe some day
-  console.log(`Server is running...`);
+  const env = app.get("env");
+  console.log(`Server is running... in ${env} mode`);
 });

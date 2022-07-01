@@ -32,7 +32,7 @@ POST  http://localhost:3000/user/register
 content-type: application/json
 
 {
-    "username":"monipopi44",
+    "username":"monipopi48",
     "firstName":"Monika",
     "lastName":"Kołon",
     "password":"1234"
