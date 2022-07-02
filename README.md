@@ -9,3 +9,5 @@ no docker at the moment use mongoDB 5.0.9
 
 +Remember to add line:
 npm install -g ts-node
+
+test
