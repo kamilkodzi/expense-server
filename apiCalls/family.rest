@@ -1,4 +1,4 @@
-###GET - find latest families created
+###GET - get all families
 GET  http://localhost:3000/families
 content-type: application/json
 
@@ -8,9 +8,13 @@ POST http://localhost:3000/families
 content-type: application/json
 
 {
-    "familyName":"Sporano007ł"
+    "familyName":"Kamilowatestowa"
 }
 
+
+###GET - MY FAMILY
+GET  http://localhost:3000/families/myfamily
+content-type: application/json
 
 ###GET - find some specific family
 GET  http://localhost:3000/families/62bd6cf951fc80cef7877c22
@@ -18,10 +22,10 @@ content-type: application/json
 
 
 ### Join Family
-PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/join
+PATCH  http://localhost:3000/families/62c02f0fd042319f16a1b236/join
 
 ### Quit Family
-PATCH  http://localhost:3000/families/62bd6cf951fc80cef7877c22/quit
+PATCH  http://localhost:3000/families/62c02f0fd042319f16a1b236/quit
 
 
 ### Set Bugdet for Family

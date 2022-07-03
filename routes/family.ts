@@ -21,6 +21,7 @@ router
   .get(catchErr(FamilyControler.showAll))
   .post(validate(addFamily), catchErr(FamilyControler.create));
 
+router.get("/myfamily", validate(), catchErr(FamilyControler.myFamily));
 router.get("/:id", validate(), catchErr(FamilyControler.showOne));
 
 router.patch(

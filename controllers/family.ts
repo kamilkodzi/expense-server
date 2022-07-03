@@ -4,14 +4,29 @@ import Expense from "../models/Expense";
 import User from "../models/User";
 
 class FamilyController {
+  myFamily = async (req, res) => {
+    const results = await Family.find({ headOfFamily: req.user.id })
+      .populate({
+        path: "headOfFamily",
+        select: ["firstName", "lastName"],
+      })
+      .populate({
+        path: "members",
+        select: ["firstName", "lastName"],
+      })
+      .populate({
+        path: "expenses",
+      });
+    res.status(200).json(results);
+  };
+
   showAll = async (req, res) => {
     const results = await Family.find()
       .populate({
         path: "headOfFamily",
         select: ["firstName", "lastName"],
       })
-      .sort({ createdAt: -1 })
-      .limit(10);
+      .sort({ createdAt: -1 });
     res.status(200).json(results);
   };
 
@@ -61,12 +76,18 @@ class FamilyController {
   join = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(req.user.id);
-    const family = await Family.findById(id);
-    family.members.push(req.user.id);
-    user.family = id;
-    family.save();
-    user.save();
-    res.status(200).json({ message: "You've joined the family" });
+    if (user.family) {
+      throw ExpressError.conflictWhileCreatingEntry(
+        "You have family already, please leave current one firs"
+      );
+    } else {
+      const family = await Family.findById(id);
+      family.members.push(req.user.id);
+      user.family = id;
+      family.save();
+      user.save();
+      res.status(200).json({ message: "You've joined the family" });
+    }
   };
 
   quit = async (req, res) => {

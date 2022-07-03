@@ -2,8 +2,39 @@ import { ExpressError } from "../error/ExpressError";
 import User from "../models/User";
 
 class UserController {
+  isLoggedIn = async (req, res) => {
+    if (req.isAuthenticated()) {
+      res
+        .status(200)
+        .json({ message: "you are logged in", username: req.user.username });
+    } else {
+      res.status(401).json({ message: "you are not logged in" });
+    }
+  };
+  getAllusers = async (req, res) => {
+    const user = await User.find().select([
+      "username",
+      "firstName",
+      "lastName",
+      "family",
+    ]);
+    res.status(200).json(user);
+  };
+
   userData = async (req, res) => {
     const { id } = req.params;
+    const user = await User.findById(id)
+      .select(["username", "firstName", "lastName", "family"])
+      .populate({
+        path: "family",
+        select: ["familyName", "headOfFamily"],
+      });
+    res.status(200).json(user);
+  };
+
+  myProfile = async (req, res) => {
+    const { id } = req.user;
+    console.log(id);
     const user = await User.findById(id)
       .select(["username", "firstName", "lastName", "family"])
       .populate({
@@ -37,7 +68,11 @@ class UserController {
   };
 
   login = async (req, res) => {
-    res.status(200).json({ message: `Welcome back ${req.user.firstName}!` });
+    res.status(200).json({
+      firstName: req.user.firstName,
+      lastName: req.user.lastName,
+      username: req.user.username,
+    });
   };
 
   logout = (req, res) => {

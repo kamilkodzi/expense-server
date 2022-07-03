@@ -3,7 +3,7 @@ POST http://localhost:3000/user/login
 content-type: application/json
 
 {
-    "username":"johny",
+    "username":"kamil",
     "password":"1234"
 }
 
@@ -14,9 +14,17 @@ POST http://localhost:3000/user/logout
 content-type: application/json
 
 
+### GET - get all userd
+GET http://localhost:3000/user/
+content-type: application/json
+
+### GET - myProfile
+GET http://localhost:3000/user/myprofile
+content-type: application/json
+
 
 ### GET - Get user information from user with Given ID
-GET  http://localhost:3000/user/62bde7bd6b2bf2dd8f806e8fs
+GET  http://localhost:3000/user/62c028a09830571d4d4c45c7
 content-type: application/json
 
 
