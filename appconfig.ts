@@ -1,3 +1,4 @@
+import { NONAME } from "dns";
 import mongoose from "mongoose";
 const MongoStore = require("connect-mongo");
 const secret = process.env.SECRET || "--ThisShouldBeASecretKey--";
@@ -24,6 +25,7 @@ export const sessionConfig = {
   secret: secret,
   cookie: { maxAge: 90000000 },
   resave: true,
+  sameSite: "none",
   saveUninitialized: true,
 };
 
