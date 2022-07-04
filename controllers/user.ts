@@ -51,8 +51,6 @@ class UserController {
   };
 
   create = async (req, res) => {
-    console.log(req.session);
-
     try {
       const { username, password, firstName, lastName } = req.body;
       const user = new User({ username, firstName, lastName });
