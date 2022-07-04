@@ -24,6 +24,7 @@ export const corsConfig = {
 export const sessionConfig = {
   store,
   secret: secret,
+  secure: true,
   cookie: { maxAge: 90000000 },
   resave: true,
   sameSite: "None",

@@ -55,7 +55,7 @@ class UserController {
     res.cookie("klucz", "wartosc", {
       maxAge: 9000000,
       sameSite: "None",
-      Secure: true,
+      secure: true,
     });
     try {
       const { username, password, firstName, lastName } = req.body;
