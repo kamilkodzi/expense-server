@@ -1,4 +1,3 @@
-import { NONAME } from "dns";
 import { SessionOptions } from "express-session";
 import mongoose from "mongoose";
 const MongoStore = require("connect-mongo");
@@ -9,7 +8,7 @@ const corsUrl = process.env.CORSURL || "http://localhost:8000";
 const store = new MongoStore({
   mongoUrl: dbUrl,
   secret: secret,
-  touchAfter: 10000,
+  touchAfter: 24 * 60 * 60,
 });
 
 store.on("error", function (e) {
@@ -25,12 +24,13 @@ export const sessionConfig: SessionOptions = {
   store,
   secret,
   cookie: {
-    maxAge: 99999999,
+    maxAge: 900000,
+    httpOnly: false,
     sameSite: "none",
     secure: true,
   },
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
 };
 
 // CONNECTION EVENTS
