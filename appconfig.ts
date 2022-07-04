@@ -28,7 +28,7 @@ export const sessionConfig = {
   cookie: { maxAge: 90000000 },
   resave: true,
   sameSite: "None",
-  saveUninitialized: true,
+  saveUninitialized: false,
 };
 
 // CONNECTION EVENTS
