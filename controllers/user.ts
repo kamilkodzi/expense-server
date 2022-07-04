@@ -3,6 +3,7 @@ import User from "../models/User";
 
 class UserController {
   isLoggedIn = async (req, res) => {
+    console.log("tuta jtestuej");
     if (req.isAuthenticated()) {
       res
         .status(200)

@@ -16,8 +16,9 @@ store.on("error", function (e) {
 });
 
 export const corsConfig = {
-  origin: "https://family-expense.netlify.app",
+  origin: "*",
   credentials: true,
+  sameSite: "None",
 };
 
 export const sessionConfig = {
@@ -25,7 +26,7 @@ export const sessionConfig = {
   secret: secret,
   cookie: { maxAge: 90000000 },
   resave: true,
-  sameSite: "none",
+  sameSite: "None",
   saveUninitialized: true,
 };
 

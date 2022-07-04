@@ -5,6 +5,7 @@ import User from "../models/User";
 
 export const isLogedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
+    req.cookie({ sameSite: "None" });
     next();
   } else {
     throw ExpressError.unAuthenticated("Please login");

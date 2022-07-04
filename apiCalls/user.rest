@@ -7,6 +7,9 @@ content-type: application/json
     "password":"1234"
 }
 
+### Check is looged in
+GET http://localhost:3000/user/loggedincheck
+
 
 
 ### POST - Logout
