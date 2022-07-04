@@ -8,8 +8,8 @@ import { loginSchema, registerSchema } from "../validation/user";
 const router = Router();
 
 router.get("/", isLogedIn, validate(), catchErr(user.getAllusers));
-router.get("/loggedincheck", validate(), catchErr(user.isLoggedIn));
-router.get("/myprofile", isLogedIn, validate(), catchErr(user.myProfile));
+router.get("/loggedincheck", catchErr(user.isLoggedIn));
+router.get("/myprofile", isLogedIn, catchErr(user.myProfile));
 router.post("/register", validate(registerSchema), catchErr(user.create));
 router.get("/:id", isLogedIn, validate(), isOwner, catchErr(user.userData));
 
