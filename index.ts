@@ -23,7 +23,7 @@ dbConnection().catch((err: any) => {
 const app: Express = express();
 app.use(helmet());
 app.use(express.json());
-app.use(cors(corsConfig));
+// app.use(cors(corsConfig));
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
