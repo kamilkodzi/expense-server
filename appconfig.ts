@@ -1,4 +1,5 @@
 import { NONAME } from "dns";
+import { SessionOptions } from "express-session";
 import mongoose from "mongoose";
 const MongoStore = require("connect-mongo");
 const secret = process.env.SECRET || "--ThisShouldBeASecretKey--";
@@ -8,7 +9,7 @@ const corsUrl = process.env.CORSURL || "http://localhost:8000";
 const store = new MongoStore({
   mongoUrl: dbUrl,
   secret: secret,
-  touchAfter: 24 * 60 * 60,
+  touchAfter: 10000,
 });
 
 store.on("error", function (e) {
@@ -18,16 +19,17 @@ store.on("error", function (e) {
 export const corsConfig = {
   origin: ["https://family-expense.netlify.app", "http://localhost:8000"],
   credentials: true,
-  sameSite: "None",
 };
 
-export const sessionConfig = {
+export const sessionConfig: SessionOptions = {
   store,
-  secret: secret,
-  secure: true,
-  cookie: { maxAge: 90000000 },
+  secret,
+  cookie: {
+    maxAge: 99999999,
+    sameSite: "none",
+    secure: true,
+  },
   resave: true,
-  sameSite: "None",
   saveUninitialized: false,
 };
 

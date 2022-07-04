@@ -3,7 +3,6 @@ import User from "../models/User";
 
 class UserController {
   isLoggedIn = async (req, res) => {
-    console.log("tuta jtestuej");
     if (req.isAuthenticated()) {
       res
         .status(200)
@@ -52,11 +51,8 @@ class UserController {
   };
 
   create = async (req, res) => {
-    res.cookie("klucz", "wartosc", {
-      maxAge: 9000000,
-      sameSite: "None",
-      secure: true,
-    });
+    console.log(req.session);
+
     try {
       const { username, password, firstName, lastName } = req.body;
       const user = new User({ username, firstName, lastName });

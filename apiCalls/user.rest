@@ -3,7 +3,7 @@ POST http://localhost:3000/user/login
 content-type: application/json
 
 {
-    "username":"johny",
+    "username":"kami",
     "password":"1234"
 }
 
@@ -43,7 +43,7 @@ POST  http://localhost:3000/user/register
 content-type: application/json
 
 {
-    "username":"johny1axdac2cvs",
+    "username":"kdzdami",
     "firstName":"John",
     "lastName":"Bravo",
     "password":"1234"
