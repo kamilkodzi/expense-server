@@ -15,7 +15,8 @@ store.on("error", function (e) {
 });
 
 export const corsConfig = {
-  origin: corsUrl,
+  origin: "https://family-expense.netlify.app",
+  credentials: true,
 };
 
 export const sessionConfig = {
