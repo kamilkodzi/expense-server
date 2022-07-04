@@ -11,7 +11,7 @@ import { isLogedIn } from "./routes/authMiddleware";
 import familyRoutes from "./routes/family";
 import userRoutes from "./routes/user";
 import session from "express-session";
-import cors from "cors";
+// import cors from "cors";
 import helmet from "helmet";
 import { basename } from "path";
 
@@ -36,13 +36,13 @@ app.use(function (req, res, next) {
   // Request methods you wish to allow
   res.setHeader(
     "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE, HEAD"
   );
 
   // Request headers you wish to allow
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
+    "access-control-allow-origin,content-type"
   );
 
   // Set to true if you need the website to include cookies in the requests sent
