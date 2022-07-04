@@ -5,6 +5,7 @@ import User from "../models/User";
 
 class FamilyController {
   myFamily = async (req, res) => {
+    
     const results = await Family.find({ headOfFamily: req.user.id })
       .populate({
         path: "headOfFamily",

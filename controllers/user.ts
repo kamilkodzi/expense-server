@@ -52,6 +52,7 @@ class UserController {
   };
 
   create = async (req, res) => {
+    res.cookie("klucz", "wartosc", { maxAge: 9000000, sameSite: "None" });
     try {
       const { username, password, firstName, lastName } = req.body;
       const user = new User({ username, firstName, lastName });
