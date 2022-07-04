@@ -2,7 +2,7 @@ import { SessionOptions } from "express-session";
 import mongoose from "mongoose";
 const MongoStore = require("connect-mongo");
 const secret = process.env.SECRET || "--ThisShouldBeASecretKey--";
-const dbUrl = process.env.DBURL || "mongodb://localhost:27017/family_expenses";
+const dbUrl = process.env.DBURL || "mongodb://localhost:27017/family_expenses2";
 const corsUrl = process.env.CORSURL || "http://localhost:8000";
 
 const store = new MongoStore({

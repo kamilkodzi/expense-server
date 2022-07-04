@@ -33,8 +33,8 @@ router.patch(
 
 router.patch(
   "/:id/quit",
-  validate(),
-  isMemberOfHittedFamily,
+  // validate(),
+  // isMemberOfHittedFamily,
   catchErr(FamilyControler.quit)
 );
 

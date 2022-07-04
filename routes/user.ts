@@ -10,16 +10,13 @@ const router = Router();
 router.get("/", isLogedIn, validate(), catchErr(user.getAllusers));
 router.get("/loggedincheck", catchErr(user.isLoggedIn));
 router.get("/myprofile", isLogedIn, catchErr(user.myProfile));
-router.post("/register", validate(registerSchema), catchErr(user.create));
-router.get("/:id", isLogedIn, validate(), isOwner, catchErr(user.userData));
-
 router.post(
-  "/login",
-  validate(loginSchema),
-  passport.authenticate("local"),
-  user.login
+  "/registerorlogin",
+  validate(registerSchema),
+  catchErr(user.createOrLogIn)
 );
-router.post("/logout", isLogedIn, user.logout);
+router.get("/:id", catchErr(user.userData));
+
 router.delete("/:id", isLogedIn, isOwner, catchErr(user.remove));
 
 export default router;

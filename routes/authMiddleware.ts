@@ -5,7 +5,6 @@ import User from "../models/User";
 
 export const isLogedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
-    
     next();
   } else {
     throw ExpressError.unAuthenticated("Please login");
@@ -29,7 +28,7 @@ export const isMemberOfHittedFamily = async (req, res, next) => {
 
 export const notMemberOfHittedFamily = async (req, res, next) => {
   const { id } = req.params;
-  const currentUserId = req.user._id;
+  const currentUserId = req.body.id;
   try {
     const family = await Family.findById(id);
     if (!family.members.includes(currentUserId)) {

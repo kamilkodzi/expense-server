@@ -24,7 +24,7 @@ class UserController {
   userData = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id)
-      .select(["username", "firstName", "lastName", "family"])
+      .select(["username", "family"])
       .populate({
         path: "family",
         select: ["familyName", "headOfFamily"],
@@ -50,20 +50,23 @@ class UserController {
     res.status(200).json({ message: "User removed" });
   };
 
-  create = async (req, res) => {
-    try {
-      const { username, password, firstName, lastName } = req.body;
-      const user = new User({ username, firstName, lastName });
-      const newUser = await User.register(user, password);
+  createOrLogIn = async (req, res) => {
+    const checkUser = await User.findOne({ username: req.body.username });
+    if (checkUser) {
       res.status(200).json({
-        message: "User created",
-        data: {
-          fistrName: newUser.firstName,
-          lastName: newUser.lastName,
-        },
+        message: checkUser._id,
       });
-    } catch (error) {
-      throw ExpressError.couldNotStoreInDatabase(error.message);
+    } else {
+      try {
+        const { username } = req.body;
+        const user = new User({ username });
+        await user.save();
+        res.status(200).json({
+          message: user.id,
+        });
+      } catch (error) {
+        throw ExpressError.couldNotStoreInDatabase(error.message);
+      }
     }
   };
 

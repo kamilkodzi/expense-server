@@ -5,17 +5,14 @@ export interface IUser {
   id?: Schema.Types.ObjectId;
   username: string;
   password: string;
-  firstName: string;
-  lastName: string;
   isAdmin: boolean;
   family: Schema.Types.ObjectId;
   createdAt: Date;
 }
 
 const UserSchema: Schema = new Schema<IUser>({
+  username: { type: String, unique: true },
   isAdmin: { type: Boolean, default: false },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
   family: { type: Schema.Types.ObjectId, ref: "Family", default: null },
   createdAt: { type: Date, immutable: true, default: Date.now },
 });

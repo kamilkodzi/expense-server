@@ -2,6 +2,7 @@ import Joi from "joi";
 
 export const addFamily = Joi.object({
   familyName: Joi.string().min(3).max(30).required(),
+  headOfFamily: Joi.string().required(),
 });
 
 export const setBudget = Joi.object({

@@ -5,7 +5,6 @@ import User from "../models/User";
 
 class FamilyController {
   myFamily = async (req, res) => {
-    
     const results = await Family.find({ headOfFamily: req.user.id })
       .populate({
         path: "headOfFamily",
@@ -25,7 +24,7 @@ class FamilyController {
     const results = await Family.find()
       .populate({
         path: "headOfFamily",
-        select: ["firstName", "lastName"],
+        select: ["username"],
       })
       .sort({ createdAt: -1 });
     res.status(200).json(results);
@@ -53,14 +52,14 @@ class FamilyController {
   };
 
   create = async (req, res) => {
-    const { familyName } = req.body;
-    const user = await User.findById(req.user.id);
+    const { familyName, headOfFamily } = req.body;
+    const user = await User.findById(headOfFamily);
 
     if (user.family === null) {
       const newFamily = new Family({
         familyName: familyName,
-        headOfFamily: req.user.id,
-        members: [req.user.id],
+        headOfFamily: headOfFamily,
+        members: [headOfFamily],
       });
       //@ts-ignore
       user.family = newFamily;
@@ -76,14 +75,14 @@ class FamilyController {
 
   join = async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.body.id);
     if (user.family) {
       throw ExpressError.conflictWhileCreatingEntry(
         "You have family already, please leave current one firs"
       );
     } else {
       const family = await Family.findById(id);
-      family.members.push(req.user.id);
+      family.members.push(req.body.id);
       user.family = id;
       family.save();
       user.save();
@@ -93,14 +92,25 @@ class FamilyController {
 
   quit = async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(req.user.id);
-
-    await Family.findByIdAndUpdate(id, {
-      $pull: { members: req.user.id },
-    });
-    user.family = null;
-    user.save();
-    res.status(200).json({ message: "You've quit the family" });
+    const user = await User.findById(req.body.id);
+    const family = await Family.findById(id);
+    //@ts-ignore
+    if (family?.headOfFamily && family?.headOfFamily.equals(req.body.id)) {
+      await Family.findByIdAndUpdate(id, {
+        $pull: { members: req.body.id },
+        headOfFamily: null,
+      });
+      user.family = null;
+      user.save();
+      res.status(200).json({ message: "You've quit the family" });
+    } else {
+      await Family.findByIdAndUpdate(id, {
+        $pull: { members: req.body.id },
+      });
+      user.family = null;
+      user.save();
+      res.status(200).json({ message: "You've quit the family" });
+    }
   };
 
   addExpense = async (req, res) => {
