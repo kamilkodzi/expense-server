@@ -22,9 +22,9 @@ export const corsConfig = {
 export const sessionConfig = {
   store,
   secret: secret,
-  cookie: { maxAge: 900000 },
+  cookie: { maxAge: 90000000 },
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
 };
 
 // CONNECTION EVENTS
