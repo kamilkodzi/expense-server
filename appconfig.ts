@@ -16,7 +16,7 @@ store.on("error", function (e) {
 });
 
 export const corsConfig = {
-  origin: "https://socialist-keener-62500.herokuapp.com/",
+  origin: "https://family-expense.netlify.app",
   credentials: true,
   sameSite: "None",
 };
