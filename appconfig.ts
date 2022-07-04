@@ -16,7 +16,7 @@ store.on("error", function (e) {
 });
 
 export const corsConfig = {
-  origin: "https://family-expense.netlify.app",
+  origin: ["https://family-expense.netlify.app", "http://localhost:8000"],
   credentials: true,
   sameSite: "None",
 };
