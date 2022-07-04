@@ -25,12 +25,12 @@ export const sessionConfig: SessionOptions = {
   secret,
   cookie: {
     maxAge: 900000,
-    httpOnly: false,
+    httpOnly: true,
     sameSite: "none",
     secure: true,
   },
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
 };
 
 // CONNECTION EVENTS
