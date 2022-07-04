@@ -16,7 +16,7 @@ store.on("error", function (e) {
 });
 
 export const corsConfig = {
-  origin: "*",
+  origin: "https://socialist-keener-62500.herokuapp.com/",
   credentials: true,
   sameSite: "None",
 };
