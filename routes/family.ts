@@ -9,7 +9,6 @@ import {
 } from "../validation/family";
 import validate from "../validation/joiMiddleware";
 import {
-  isHeadOfFamily,
   isMemberOfHittedFamily,
   isOwnerOfExpense,
   notMemberOfHittedFamily,
@@ -31,32 +30,28 @@ router.patch(
   catchErr(FamilyControler.join)
 );
 
-router.patch(
-  "/:id/quit",
-  // validate(),
-  // isMemberOfHittedFamily,
-  catchErr(FamilyControler.quit)
-);
+router.patch("/:id/quit", catchErr(FamilyControler.quit));
 
 router.patch(
   "/:id/budget",
   validate(setBudget),
-  isHeadOfFamily,
   catchErr(FamilyControler.setBudget)
+);
+router.patch(
+  "/:id/user/:userId/becomehead",
+  validate(),
+  catchErr(FamilyControler.becomeHeadOfFamily)
 );
 
 router.post(
   "/:id/expenses",
   validate(addExpense),
-  isMemberOfHittedFamily,
   catchErr(FamilyControler.addExpense)
 );
 
 router.delete(
   "/:id/expenses/:expenseId",
   validate(),
-  isMemberOfHittedFamily,
-  isOwnerOfExpense,
   catchErr(FamilyControler.removeExpense)
 );
 

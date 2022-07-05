@@ -3,14 +3,6 @@ import Expense from "../models/Expense";
 import Family from "../models/Family";
 import User from "../models/User";
 
-export const isLogedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    throw ExpressError.unAuthenticated("Please login");
-  }
-};
-
 export const isMemberOfHittedFamily = async (req, res, next) => {
   const { id } = req.params;
   const currentUserId = req.user._id;

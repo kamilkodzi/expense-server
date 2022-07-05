@@ -18,11 +18,4 @@ const FamilySchema: Schema = new Schema<IFamily>({
   expenses: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
 });
 
-FamilySchema.post("findOneAndDelete", async function (doc) {
-  if (doc) {
-    console.log("You reach post delete middleware");
-    //implements remove all of expenses assigned to that family
-  }
-});
-
 export default model<IFamily>("Family", FamilySchema);

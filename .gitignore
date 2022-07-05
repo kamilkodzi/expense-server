@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+/apiCalls
 
 # production
 /build
@@ -16,5 +17,6 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.rest
 
 npm-debug.log*

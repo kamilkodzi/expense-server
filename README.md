@@ -1,13 +1,12 @@
 ## 🚀 Quick start
 
-1.  **To be delivered soon**
+1.  **Visit working site on**
+    https://family-expense.netlify.app/
 
-Here will be instruction how to run application localy
-
-+Remember to add line:
-no docker at the moment use mongoDB 5.0.9
+2.  **Instructions for local run**
+    Here will be instruction how to run application localy
 
 +Remember to add line:
 npm install -g ts-node
 
-test
+TBD

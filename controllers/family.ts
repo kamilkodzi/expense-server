@@ -76,7 +76,7 @@ class FamilyController {
   join = async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(req.body.id);
-    if (user.family) {
+    if (user?.family) {
       throw ExpressError.conflictWhileCreatingEntry(
         "You have family already, please leave current one firs"
       );
@@ -115,13 +115,32 @@ class FamilyController {
 
   addExpense = async (req, res) => {
     const { id } = req.params;
-    const { value, name } = req.body;
+    const { value, name, author, familyID } = req.body;
     const expenseObj = new Expense({
       name,
       value,
-      author: req.user.id,
+      author,
+      family: id,
     });
+
+    const expenses = await Expense.find({ family: id });
     const family = await Family.findById(id);
+    const sumOfExpenses = expenses.map((i) => {});
+
+    if (expenses.length > 0) {
+      const sum =
+        expenses.map((item) => item?.value).reduce((a, b) => a + b) +
+        Number(value);
+
+      if (sum > family?.budget) {
+        throw ExpressError.couldNotStoreInDatabase("It`s above your budget :(");
+      }
+    } else {
+      if (value > family?.budget) {
+        throw ExpressError.couldNotStoreInDatabase("It`s above your budget :(");
+      }
+    }
+
     //@ts-ignore
     family.expenses.push(expenseObj);
     await family.save();
@@ -145,12 +164,28 @@ class FamilyController {
   };
 
   setBudget = async (req, res) => {
-    const { budgetValue } = req.body;
+    const { value } = req.body;
     const { id } = req.params;
     const family = await Family.findById(id);
-    family.budget = budgetValue;
+    family.budget = value;
     family.save();
     res.status(200).json({ message: "You've changed the budget" });
+  };
+
+  becomeHeadOfFamily = async (req, res) => {
+    const { id, userId } = req.params;
+    const checkIfNull = await Family.findById(id);
+
+    if (!checkIfNull.headOfFamily) {
+      const result = await Family.findByIdAndUpdate(id, {
+        headOfFamily: userId,
+      });
+      res.status(200).json({ message: "You are head of family" });
+    } else {
+      throw ExpressError.couldNotStoreInDatabase(
+        "Someone other is head of family now"
+      );
+    }
   };
 }
 

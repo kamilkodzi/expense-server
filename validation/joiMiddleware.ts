@@ -4,6 +4,7 @@ import Joi from "joi";
 const paramsSchema = Joi.object({
   id: Joi.string().hex().length(24),
   expenseId: Joi.string().hex().length(24),
+  userId: Joi.string().hex().length(24),
 });
 
 const validate = (schema?) => {

@@ -27,19 +27,30 @@ class UserController {
       .select(["username", "family"])
       .populate({
         path: "family",
-        select: ["familyName", "headOfFamily"],
+        select: ["familyName", "headOfFamily", "budget"],
+        populate: { path: "headOfFamily", select: "username" },
       });
     res.status(200).json(user);
   };
 
   myProfile = async (req, res) => {
-    const { id } = req.user;
-    console.log(id);
+    const { id } = req.params;
     const user = await User.findById(id)
-      .select(["username", "firstName", "lastName", "family"])
+      .select(["username", "family"])
       .populate({
         path: "family",
-        select: ["familyName", "headOfFamily"],
+        select: ["familyName", "headOfFamily", "members", "expenses", "budget"],
+        populate: { path: "members", select: "username" },
+      })
+      .populate({
+        path: "family",
+        select: ["familyName", "headOfFamily", "members", "expenses", "budget"],
+        populate: { path: "expenses", select: ["name", "value", "_id"] },
+      })
+      .populate({
+        path: "family",
+        select: ["familyName", "headOfFamily", "members", "expenses", "budget"],
+        populate: { path: "headOfFamily", select: "username" },
       });
     res.status(200).json(user);
   };

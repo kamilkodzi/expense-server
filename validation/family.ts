@@ -6,12 +6,13 @@ export const addFamily = Joi.object({
 });
 
 export const setBudget = Joi.object({
-  budgetValue: Joi.number().min(0).required(),
+  value: Joi.number().min(0).required(),
 });
 
 export const addExpense = Joi.object({
   value: Joi.number().min(0).required(),
   name: Joi.string().min(1).max(30).required(),
+  author: Joi.string().required(),
 });
 
 export const editExpense = Joi.object({
