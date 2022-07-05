@@ -14,7 +14,7 @@ const FamilySchema: Schema = new Schema<IFamily>({
   headOfFamily: { type: Schema.Types.ObjectId, ref: "User" },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, immutable: true, default: Date.now },
-  budget: { type: Number, default: 0 },
+  budget: { type: Number, default: 100 },
   expenses: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
 });
 
